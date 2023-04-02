@@ -2,24 +2,33 @@ from typing import List
 from models.parameter import Parameter, ParamType
 from data.values import SYNONYMS, VARIABLES, OBJECTS
 
-
-def find_relation(word):
+def find_values(word):
+    """
+    returns a Parameter or None
+    """
+    # check for relations
     if word in SYNONYMS:
-        return word
+        return Parameter(word, ParamType.RELATION)
+
     # word is not in the dictionary search inside the synonyms list
     for key, value in SYNONYMS.items():
         find = next((syn for syn in value if syn == word), None)
         if find is not None:
-            return key
-    return None 
+            return Parameter(key, ParamType.RELATION)
 
-def find_vars(variable):
-    val = next((var for var in VARIABLES if var == variable), None)
-    return val
+    # check for variables
+    variable = next((var for var in VARIABLES if var == word), None)
+    if variable is not None:
+        return Parameter(variable, ParamType.VARIABLE)
 
-def find_object(obj):
-    val = next((ob for ob in OBJECTS if ob == obj), None)
-    return val
+    # check for objects
+    obj = next((ob for ob in OBJECTS if ob == word), None)
+    if obj is not None:
+        return Parameter(obj, ParamType.OBJECT)
+
+    # nothing has been found
+    return None
+
 
 def check_sentence(params: List[Parameter]):
     """
@@ -49,29 +58,23 @@ def search_parameters(sentence):
     params = []
 
     for word in words:
-        # find relations
-        rel = find_relation(word)
-        if rel is not None:
-            params.append(Parameter(rel, ParamType.RELATION))
+        param = find_values(word)
+        if param is not None:
+            params.append(param)
             continue
-        # find objects
-        obj = find_object(word)
-        if obj is not None:
-            params.append(Parameter(obj, ParamType.OBJECT))
-            continue
-        # find vars
-        var = find_vars(word)
-        if var is not None:
-            params.append(Parameter(var, ParamType.VARIABLE))
-            continue
+
     return params
 
 def construct_query(params: List[Parameter]):
-    rel = params[1]
+    rel = params[1].value
     val1 = params[0]
     val2 = params[2]
 
     obj1 = val1.value if val1.param_type == ParamType.OBJECT else 'X' 
     obj2 = val2.value if val2.param_type == ParamType.OBJECT else 'Y'
 
-    return f'{rel.value}({obj1}, {obj2})'
+    return {
+        "relation": rel,
+        "f_parameter": obj1,
+        "s_parameter": obj2,
+    }

@@ -18,8 +18,8 @@ madre(M,H):- progenitor(M,H), mujer(M).
 padre(P,H):- progenitor(P,H), hombre(P).
 hijo(H,P):- progenitor(P,H), hombre(H).
 hija(H, P):- progenitor(P,H), mujer(H).
-hermana(HA, HO):- progenitor(X, HA), progenitor(X, HO), mujer(HA).
-hermano(HO, HA):- progenitor(X, HO), progenitor(X, HA), hombre(HO).
+hermana(HA, HO):- progenitor(X, HA), progenitor(X, HO), mujer(HA), HA\=HO.
+hermano(HO, HA):- progenitor(X, HO), progenitor(X, HA), hombre(HO), HO\=HA.
 abuelo(A, N):- progenitor(X, N), progenitor(A, X), hombre(A).
 abuela(A, N):- progenitor(X, N), progenitor(A, X), mujer(A).
 nieta(N, A):- progenitor(A, X), progenitor(X, N), mujer(N).
