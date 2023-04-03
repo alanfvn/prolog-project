@@ -1,4 +1,4 @@
-SYNONYMS = {
+RELATIONS = {
     "abuelo": [
         "abuelastro",
         "abuelazo"

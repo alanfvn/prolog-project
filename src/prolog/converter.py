@@ -1,17 +1,17 @@
 from typing import List
 from models.parameter import Parameter, ParamType
-from data.values import SYNONYMS, VARIABLES, OBJECTS
+from data.values import RELATIONS, VARIABLES, OBJECTS
 
 def find_values(word):
     """
     returns a Parameter or None
     """
     # check for relations
-    if word in SYNONYMS:
+    if word in RELATIONS:
         return Parameter(word, ParamType.RELATION)
 
     # word is not in the dictionary search inside the synonyms list
-    for key, value in SYNONYMS.items():
+    for key, value in RELATIONS.items():
         find = next((syn for syn in value if syn == word), None)
         if find is not None:
             return Parameter(key, ParamType.RELATION)

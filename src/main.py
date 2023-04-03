@@ -1,7 +1,6 @@
-from converter import construct_query, search_parameters, check_sentence
-from prolog_bridge import ask_query
-from util import press_to_continue, sanitize_input,clean
-
+from prolog.bridge import ask_query
+from prolog.converter import construct_query, search_parameters, check_sentence
+from util.util import press_to_continue, sanitize_input,clean
 
 while True:
     try:
