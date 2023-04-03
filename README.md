@@ -1,5 +1,6 @@
 # Prolog
 Prolog connection project with python.
+Artificial inteligence, class (Student id: 4090-19-4713) 
 
 ## Requirements
 - [Prolog 8.4.2](https://www.swi-prolog.org/download/stable/bin/swipl-8.4.2-1.x64.exe.envelope)
