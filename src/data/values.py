@@ -32,7 +32,7 @@ RELATIONS = {
     "hijo": [
         "cachorro",
         "descendiente",
-        "heredero"
+        "heredero",
         "nino",
         "sucesor",
     ],
